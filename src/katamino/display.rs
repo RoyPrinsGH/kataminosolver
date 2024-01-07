@@ -57,3 +57,30 @@ pub fn display_board(b: &Board) {
     stdout.flush().unwrap();
     stdout.execute(MoveTo(0 as u16, 6 as u16)).unwrap();
 }
+
+pub fn undisplay_board(b: &Board) {
+    let top_corner_x = b.x_min;
+    let top_corner_y = b.y_max;
+
+    let mut stdout = stdout();
+    stdout.execute(DisableBlinking).unwrap();
+    stdout.execute(Clear(ClearType::All)).unwrap(); // Clear the screen
+
+    for cell_key in b.cells.keys() {
+        let cell_id = b.cells[cell_key];
+        let x = cell_key[0] - top_corner_x;
+        let y = top_corner_y - cell_key[1];
+
+        // Print 'X' at cell position
+        stdout
+            .execute(MoveTo(x as u16, y as u16))
+            .unwrap()
+            .execute(SetForegroundColor(get_color_for_tile_id(cell_id)))
+            .unwrap()
+            .execute(Print(' '))
+            .unwrap();
+    }
+
+    stdout.flush().unwrap();
+    stdout.execute(MoveTo(0 as u16, 6 as u16)).unwrap();
+}
