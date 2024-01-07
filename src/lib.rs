@@ -13,47 +13,47 @@ pub fn lol() {
     let _d3 = t.get_tile_definition(2u16);
     let mut b = Board::new();
     match b.add_tile(_d1, 0, 0, TileOrientation::UP) {
-        Some(_) => {
+        Ok(_) => {
             // Print everything from board.cells
             for kv in b.cells.iter() {
                 println!("({:?}, {:?}): {:?}", kv.0[0], kv.0[1], kv.1);
             }
         }
-        None => {
-            // Do nothing
+        Err(msg) => {
+            println!("error placing! {:?}", msg)
         }
     }
     match b.add_tile(_d2, 1, 0, TileOrientation::UP) {
-        Some(_) => {
+        Ok(_) => {
             // Print everything from board.cells
             for kv in b.cells.iter() {
                 println!("({:?}, {:?}): {:?}", kv.0[0], kv.0[1], kv.1);
             }
         }
-        None => {
-            println!("error placing!");
+        Err(msg) => {
+            println!("error placing! {:?}", msg)
         }
     }
     match b.add_tile(_d2, 1, 0, TileOrientation::UP) {
-        Some(_) => {
+        Ok(_) => {
             // Print everything from board.cells
             for kv in b.cells.iter() {
                 println!("({:?}, {:?}): {:?}", kv.0[0], kv.0[1], kv.1);
             }
         }
-        None => {
-            println!("error placing!");
+        Err(msg) => {
+            println!("error placing! {:?}", msg)
         }
     }
     match b.add_tile(_d3, 4, 1, TileOrientation::UP) {
-        Some(_) => {
+        Ok(_) => {
             // Print everything from board.cells
             for kv in b.cells.iter() {
                 println!("({:?}, {:?}): {:?}", kv.0[0], kv.0[1], kv.1);
             }
         }
-        None => {
-            println!("error placing!");
+        Err(msg) => {
+            println!("error placing! {:?}", msg)
         }
     }
     display_board(&b);

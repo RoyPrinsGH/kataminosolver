@@ -62,9 +62,12 @@ impl<'a> Board<'a> {
         px: i16,
         py: i16,
         o: TileOrientation,
-    ) -> Option<u16> {
+    ) -> Result<u16, std::io::Error> {
         if !self.can_place_tile(t, px, py, o) {
-            return None;
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Cannot place tile",
+            ));
         }
         let id = self.tiles.len() as u16;
         let tile: Tile<'a> = Tile {
@@ -76,7 +79,7 @@ impl<'a> Board<'a> {
         };
         self.place_tile(&tile);
         self.tiles.push(tile);
-        Some(id)
+        Ok(id)
     }
     pub fn remove_tile(&mut self, id: u16) {
         let t = self.tiles.remove(id as usize);
